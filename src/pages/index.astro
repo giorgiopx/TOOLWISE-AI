@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getArticles } from '../lib/articles';
+import { CATEGORIES } from '../site';
+
+const latest = (await getArticles()).slice(0, 6);
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">For freelancers & small teams</p>
+      <h1>Practical AI tools. <em>Honest</em> comparisons. Better work.</h1>
+      <p class="lede">
+        Toolwise AI publishes clear, fact-checked guides to choosing and using AI tools in real client work —
+        without the hype, inflated claims or invented test results.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/articles/">Browse articles</a>
+        <a class="btn btn-ghost" href="/editorial-policy/">How we review tools</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="pillars">
+        <div class="pillar">
+          <p class="pillar-num">01</p>
+          <h3>Workflows first</h3>
+          <p>Step-by-step processes you can repeat, adapt and check — not lists of tools for the sake of it.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar-num">02</p>
+          <h3>Verified facts</h3>
+          <p>Prices and features are checked against official sources and dated, so you know how current they are.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar-num">03</p>
+          <h3>Clear disclosure</h3>
+          <p>When a page contains affiliate links, we say so. Recommendations are never for sale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="section-head"><h2>What we cover</h2></div>
+      <ul class="categories">
+        {CATEGORIES.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Latest articles</h2>
+        <a href="/articles/">View all →</a>
+      </div>
+      {latest.length > 0 ? (
+        <div class="cards">{latest.map((a) => <ArticleCard article={a} />)}</div>
+      ) : (
+        <div class="empty">
+          <strong>First guides are in review.</strong> We publish each article only after its facts, prices and
+          links have been checked by a person. Check back soon.
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

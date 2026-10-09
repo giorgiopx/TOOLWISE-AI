@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Prose from '../components/Prose.astro';
+import { SITE } from '../site';
+---
+<Base title="Contact" description="How to get in touch with Toolwise AI.">
+  <Prose title="Contact" lede="Corrections, questions and suggestions are all welcome.">
+    {SITE.contactEmail ? (
+      <p>Email us at <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>. We read every message.</p>
+    ) : (
+      <div class="notice">Our contact inbox is being set up. A direct email address will be listed here shortly.</div>
+    )}
+    <h2>Reporting an error</h2>
+    <p>
+      If you find a factual mistake or an outdated price, please include the article URL and what needs correcting.
+      We review reports and update articles as described in our <a href="/editorial-policy/">editorial policy</a>.
+    </p>
+    <h2>Vendors and partnerships</h2>
+    <p>
+      We don’t accept payment for coverage or rankings. You’re welcome to let us know about a product, but there is
+      no guarantee we will write about it.
+    </p>
+  </Prose>
+</Base>
