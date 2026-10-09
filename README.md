@@ -1,42 +1,51 @@
-# Toolwise AI — Netlify starter
+# Toolwise AI — Netlify starter (Astro)
 
-A lightweight Astro static website starter for Toolwise AI. It is designed to deploy through a Git repository connected to Netlify, not as a WordPress theme.
+A lightweight, responsive static website for Toolwise AI, designed for deployment through a GitHub repository connected to Netlify.
 
 ## Included
-- Responsive homepage and article library
+- Dark editorial design with a surreal animated orbital hero, lime/violet accents, responsive article cards and reduced-motion support
+- Article library with search, individual article pages, SEO descriptions, Open Graph/Twitter metadata and Article JSON-LD
 - About, editorial policy, affiliate disclosure, privacy, contact and 404 pages
-- Three English starter articles, intentionally marked as drafts and not approved for publication
-- Article content collection with draft/review flags
-- Automatic sitemap integration
+- 20 complete English-language article drafts
+- Five foundational articles configured for the initial launch; the other fifteen remain unpublished drafts
+- Competitor research and editorial strategy: `RESEARCH_AND_EDITORIAL_STRATEGY.md`
+- Content calendar: `CONTENT_CALENDAR.csv`
+- Article automation plan and deployment checklist
 - Netlify build configuration
-- No AdSense publisher ID, affiliate IDs, tracking scripts or made-up credentials
+- No AdSense publisher ID, affiliate IDs, analytics IDs or fabricated credentials
 
 ## Deploy to Netlify
-1. Unzip this folder.
-2. Create a private or public GitHub repository and upload the contents of this folder to its root.
-3. In Netlify, choose **Add new project / Import an existing project**, connect GitHub and select the repository.
-4. Build command: `npm run build`; publish directory: `dist`. `netlify.toml` already contains these values.
-5. Deploy first to the temporary `*.netlify.app` address and check all pages.
-6. After choosing and purchasing a domain, update `site` in `astro.config.mjs` and the sitemap URL in `public/robots.txt` to the real canonical domain, then commit and redeploy.
+1. Upload the **contents** of this folder to the root of your GitHub repository (not the ZIP file and not an extra enclosing folder).
+2. In Netlify, import the existing GitHub repository.
+3. Build command: `npm run build`; publish directory: `dist`. `netlify.toml` contains these values.
+4. Set the Netlify environment variable `SITE_URL` to your actual public production URL, initially your assigned `https://<site-name>.netlify.app`. After purchasing a custom domain, update `SITE_URL` to the preferred canonical HTTPS domain and redeploy.
+5. Verify that `/`, `/articles/`, `/about/`, `/privacy/`, and article URLs work. The project is not considered live-ready until the build and page tests pass.
 
 ## Article workflow
-Articles live in `src/content/articles/` as Markdown. Each file needs frontmatter fields similar to the included examples. Keep `draft: true` and `reviewed: false` until a human has checked it. To publish an article, set `draft: false` and `reviewed: true`, then commit and push. Netlify will rebuild and deploy automatically.
+Articles live in `src/content/articles/` as Markdown. To publish a draft after review, set `draft: false` and `reviewed: true`, then commit and push to GitHub. Netlify will rebuild and deploy automatically. Keep drafts unpublished until product facts, sources, links, and any claims about testing have been checked.
+
+## SEO and domain
+- The project does not use `example.com` as a canonical domain.
+- `SITE_URL` controls Astro's site URL, canonical tags and sitemap generation. Set it in Netlify before launch.
+- After setting `SITE_URL`, update `public/robots.txt` with `Sitemap: https://YOUR-REAL-DOMAIN/sitemap-index.xml` and redeploy.
+- The domain has not been purchased or verified as available.
 
 ## Before public launch
-- Replace the placeholder domain and contact email.
-- Review and complete the privacy policy and cookie/consent setup for the actual services used.
-- Review the affiliate disclosure against the affiliate programs you actually join.
-- Add real author information and a contact channel.
-- Verify product facts, pricing and every outbound affiliate link.
-- Add real AdSense code only after it is supplied by your AdSense account and you are ready to submit the site for review. Never invent a publisher ID. Approval is not guaranteed.
-- Test mobile layout, navigation, 404, canonical URL, sitemap and all links.
+- Replace placeholder contact details with a real monitored email/contact route.
+- Complete privacy, cookie/consent and disclosure pages for the services actually used and the relevant audience/jurisdictions.
+- Add author information that reflects the real editorial team.
+- Verify product features, pricing, plan limits and every outbound link.
+- Add first-hand test results only after performing the tests; do not imply products were tested when they were not.
+- Add real AdSense code only through a controlled configuration after you have the correct snippet and are ready to submit the site for review. Never share account passwords or private API keys in chat or commit secrets to a public repository. AdSense approval and ad serving are not guaranteed.
+- Check mobile layout, keyboard focus, accessibility, page titles, canonical URL, sitemap and all links.
 
-## Brand
-- Midnight Navy: `#17243A`
-- Warm Paper: `#F6F5F1`
-- Mint: `#7FE1C3`
-- Soft Slate: `#DCE4EF`
+## Brand direction
+- Midnight: `#101321`
+- Electric lime: `#D6FF70`
+- Soft violet: `#A69BFF`
+- Muted lavender-gray: `#A2A7BD`
+- Tone: experimental, editorial, surreal but credible; practical before hype.
 - Tagline: “Practical AI tools. Honest comparisons. Better work.”
 
-## Notes
-This starter has not been deployed or tested against a live domain. Review all copy and legal pages before launch. The sample articles are not publication-approved and contain editorial notes that must be removed only after the required checks are complete.
+## Note
+The articles are editorial drafts, not claims of hands-on product testing. Review and enrich them with original examples, evidence and sources before publishing.

@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft && data.reviewed);
+  return articles.map(article => ({ params: { id: article.id }, props: { article } }));
+}
+const { article } = Astro.props;
+const { Content } = await render(article);
+const date = article.data.pubDate.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+---
+<BaseLayout title={`${article.data.title} | Toolwise AI`} description={article.data.description} ogType="article">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.data.title,
+    description: article.data.description,
+    datePublished: article.data.pubDate.toISOString(),
+    dateModified: (article.data.updatedDate ?? article.data.pubDate).toISOString(),
+    author: { "@type": "Organization", name: article.data.author },
+    publisher: { "@type": "Organization", name: "Toolwise AI" },
+    mainEntityOfPage: Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined
+  })} />
+  <article class="prose"><a class="back-link" href="/articles/">← Back to all guides</a><div class="article-hero"><span class="category">{article.data.category}</span><h1>{article.data.title}</h1><p class="dek">{article.data.description}</p><p class="meta">By {article.data.author} · {date} · Practical guide</p></div><div class="article-callout"><strong>Toolwise principle</strong><br/>Use AI to support good work—not to replace verification, context or human judgement.</div><Content /><div class="article-end"><div><span class="eyebrow">Keep exploring</span><p>Find another practical idea for your workflow.</p></div><a href="/articles/">Explore all guides ↗</a></div></article>
+</BaseLayout>

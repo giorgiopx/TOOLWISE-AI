@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Update to the real canonical domain once purchased (also update `site` in astro.config.mjs).
+# Update this line to your custom domain if you change SITE_URL.
 Sitemap: https://toolwiseai.netlify.app/sitemap-index.xml

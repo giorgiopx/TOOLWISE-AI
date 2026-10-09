@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const articles = (await getCollection('articles', ({ data }) => !data.draft && data.reviewed)).sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout title="AI Guides & Workflows | Toolwise AI" description="Practical AI tool guides, workflows and comparisons for freelancers and solo entrepreneurs.">
+<section class="page-intro"><span class="eyebrow">The Toolwise library</span><h1>Ideas you can<br/>put to work.</h1><p>Guides for choosing tools, improving workflows and making better decisions about AI—without the noise.</p><div class="filter-bar"><input id="article-search" class="search-input" type="search" placeholder="Search guides, topics, workflows…" aria-label="Search articles" /><span class="filter-count" id="article-count">{articles.length} GUIDES</span></div></section>
+<section class="wrap" style="padding-top:10px"><div class="article-grid" id="article-grid">{articles.map((article,i) => <article class="article-card" data-article data-search={`${article.data.title} ${article.data.description} ${article.data.category}`.toLowerCase()}><div class="card-top"><span class="category">{article.data.category}</span><span class="card-number">{String(i+1).padStart(2,'0')}</span></div><h3><a href={`/articles/${article.id}/`}>{article.data.title}</a></h3><p>{article.data.description}</p><a class="read" href={`/articles/${article.id}/`}>Read the guide <span>↗</span></a><span class="card-glow"></span></article>)}</div><p id="no-results" class="notice" hidden>No guides match that search. Try another topic.</p></section>
+<script is:inline>
+const input=document.querySelector('#article-search');const cards=[...document.querySelectorAll('[data-article]')];const count=document.querySelector('#article-count');const empty=document.querySelector('#no-results');input?.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();let shown=0;cards.forEach(card=>{const match=card.dataset.search.includes(q);card.hidden=!match;if(match)shown++});count.textContent=`${shown} ${shown===1?'GUIDE':'GUIDES'}`;empty.hidden=shown!==0});
+</script>
+</BaseLayout>
