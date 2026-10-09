@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const articles = (await getCollection('articles', ({ data }) => !data.draft && data.reviewed)).sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featured = articles.slice(0,6);
+---
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-copy-wrap" data-reveal><span class="eyebrow">Independent guides for modern work</span><h1>Make AI work<br/>for <span class="outline">your world.</span></h1><p class="hero-copy">Less hype. More signal. Discover practical AI workflows, clear comparisons and thoughtful guides built for freelancers and people building something of their own.</p><div class="hero-actions"><a class="button" href="/articles/">Explore the library <span>↗</span></a><a class="text-link" href="/editorial-policy/">How we think <span>→</span></a></div></div>
+    <div class="hero-art" aria-label="Abstract floating orb illustration" role="img"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="orb-core"></div><div class="float-card float-one"><strong><i class="tiny-dot"></i>Less busywork</strong><span>More room to think</span></div><div class="float-card float-two"><strong>Human judgement</strong><span>Always in the loop</span></div><div class="float-card float-three"><strong>Signal over noise</strong><span>Practical by design</span></div></div>
+  </section>
+  <div class="signal-row"><span>Practical workflows</span><span>Honest comparisons</span><span>Human-first AI</span><span>Built for independents</span></div>
+  <section class="wrap"><div class="section-head"><div><span class="eyebrow">The field guide</span><h2>Useful ideas.<br/>No magic tricks.</h2></div><p>Start with a real task, find a better way to do it, and keep the tools that earn their place.</p></div>
+    <div class="article-grid">{featured.map((article,i) => <article class="article-card reveal" data-reveal><div class="card-top"><span class="category">{article.data.category}</span><span class="card-number">0{i+1}</span></div><h3><a href={`/articles/${article.id}/`}>{article.data.title}</a></h3><p>{article.data.description}</p><a class="read" href={`/articles/${article.id}/`}>Read the guide <span>↗</span></a><span class="card-glow"></span></article>)}</div>
+    <div style="text-align:center;margin-top:30px"><a class="button" href="/articles/">Browse all {articles.length} guides <span>↗</span></a></div>
+  </section>
+  <section class="feature-band" data-reveal><div><span class="eyebrow">Our north star</span><h2>Useful beats impressive.</h2><p>AI is changing fast. Our job is to make the decisions around it feel clearer: what to try, what to question, what to protect and when a simple workflow is enough.</p><a class="text-link" href="/about/">Meet Toolwise AI →</a></div><div class="feature-points"><div class="feature-point"><i>✳</i><span><strong>Start with the task.</strong> Tools come second to the problem you need to solve.</span></div><div class="feature-point"><i>✳</i><span><strong>Show the trade-offs.</strong> Every useful recommendation has limits and context.</span></div><div class="feature-point"><i>✳</i><span><strong>Keep people accountable.</strong> AI can assist; humans still verify and decide.</span></div></div></section>
+</BaseLayout>
